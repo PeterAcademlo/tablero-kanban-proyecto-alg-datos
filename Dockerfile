@@ -1,15 +1,11 @@
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
-
-# Copiar todo
 COPY . .
 
-# Compilar y ejecutar directamente SIN crear JAR
+# Compilar
 RUN find src -name "*.java" > sources.txt
 RUN javac -cp "lib/*" -d target @sources.txt
 
 EXPOSE 8080
-
-# Ejecutar directamente las clases compiladas
 CMD ["java", "-cp", "target:lib/*", "kanban.SimpleKanbanServer"]
